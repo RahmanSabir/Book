@@ -1,0 +1,31 @@
+<?php 
+ 
+  if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])){
+        $cutomerlog = $user->cutomerLogin($_POST);
+    }
+
+    ?>
+        <div><?php if (isset($cutomerlog)) {
+          echo '<h5 class="text-danger">'.$cutomerlog.'</h5>';
+        } ?></div>
+
+
+
+
+
+        <?php
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save'])) {
+        $insertValueMember = $user->registration($_POST);
+        
+    }
+?>  
+
+
+
+
+
+
+
+
+
+
