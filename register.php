@@ -1,20 +1,27 @@
 <?php
 session_start();
 
-$connect = mysqli_connect("localhost", "root", "", "sabir");
+$connect = mysqli_connect("localhost", "root" );
 
+mysqli_select_db($connect, 'sabir');
+
+$name="";
+$password="";
+$num="";
+
+if($_SERVER['REQUEST_METHOD'] == "POST"){
 $name = $_POST['username'];
 $password = $_POST['password'];
 
-$sql = "SELECT * FROM use where name = '$name' ";
-$result = mysqli_query($connect, $sql);
-$num = mysqli_num_rows($result);
-
-if ($num == 0) {
-  $reg = " insert into user (name, password) values ('$name' , '$password') ";
-  mysqli_query($connect, $sql);
-  echo "registration successfull";
+   if ( isset($_POST['username'])  &&  isset($_POST['password'])  ) {
+      $query = " insert into user (name, password) values ('$name' , '$password') ";
+      mysqli_query($connect, $query);
+   }
+      else{
+      echo "registration successfull";
 }
+}
+
 
 ?>
 
@@ -31,7 +38,7 @@ if ($num == 0) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 
-  <title>Document</title>
+  <title>Registration</title>
 </head>
 
 <body>
@@ -55,7 +62,7 @@ if ($num == 0) {
 
 
             <div class="form-group row">
-              <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+              <label for="password" class="col-sm-2 col-form-label">Password</label>
               <div class="col-sm-10">
                 <input type="password" class="form-control" name="password" placeholder="Password">
               </div>
