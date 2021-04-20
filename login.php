@@ -6,40 +6,32 @@ $connect = mysqli_connect("localhost", "root" );
 
 mysqli_select_db($connect, 'sabir');
 
-$name="";
-$password="";
-$num="";
+if(isset($_POST['submit'])){
+  $name = mysqli_real_escape_string($connect, $_POST['username']);
+  $password = $_POST['password'];
+ 
+  $sql = "SELECT * FROM user WHERE u_name='$name' ";
+$result = mysqli_query($connect, $sql);
+$row = mysqli_fetch_assoc($result);
+$dbStoredPASSWORD = $row['password'];
 
-if($_SERVER['REQUEST_METHOD'] == "POST"){
-$name = $_POST['username'];
-$password = $_POST['password'];
-
-   if ( isset($_POST['username'])  &&  isset($_POST['password'])  ) {
-      $query = "select * from user where username = '$name'";
-      $result = mysqli_query($connect, $query);
-   
-      if($result){
-        if($result && mysqli_num_rows($result) > 0)
-				{
-
-					$user_data = mysqli_fetch_assoc($result);
-					
-					if($user_data['password'] === $password){
-            $_SESSION['user_id'] = $user_data['user_id'];
-						header("Location: user.php");
-						die;
-          }
+if (password_verify ($password, $dbStoredPASSWORD)) {
+  $_SESSION['u_name'] = $name;
+  $_SESSION['u_id'] = $row['id'];
+  header('location:index.php');
+} else {
+ header('location:login.php?message=1');
+   $message =  'incorrect info';
 }
-}
-   }
-   else
-		{
-			echo "wrong username or password!";
-		}
-			
-	}
 
+
+
+
+ 
+}
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -73,9 +65,9 @@ $password = $_POST['password'];
           <form class="bg-secondary p-3" method="post">
 
             <div class="form-group row">
-              <label for="username" class="col-sm-2 col-form-label">Username</label>
+              <label for="username" class="col-sm-2 col-form-label">Username</label >
               <div class="col-sm-10">
-                <input type="text" class="form-control" name="username" placeholder="Name">
+                <input type="text" class="form-control" name="username" placeholder="Name" required>
               </div>
             </div>
 
@@ -83,7 +75,7 @@ $password = $_POST['password'];
             <div class="form-group row">
               <label for="password" class="col-sm-2 col-form-label">Password</label>
               <div class="col-sm-10 mb-2 ">
-                <input type="password" class="form-control" name="password" placeholder="Password">
+                <input type="password" class="form-control" name="password" placeholder="Password" required>
               </div>
             </div>
             <div class="form-group row">
