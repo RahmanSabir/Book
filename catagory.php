@@ -1,4 +1,6 @@
-<?php include "db_connect.php"; ?>
+<?php 
+include "db_connect.php"; 
+?>
 <?php
     $id =$_GET['id'];
     $sql = "SELECT * FROM product JOIN category ON product.cat_id = category.cat_id WHERE product.cat_id='{$id}'";
@@ -22,7 +24,9 @@
 </head>
 <body>
     <section class="container m-5">
-      <h2 class="text-center p-3 text-light bg-success">All Booklist</h2>
+      <h2 class="text-center p-3 text-light bg-success"><?php 
+      $cat_title= $_GET['id'];
+      echo $cat_title  ?></h2>
         <div class="row">
           <?php 
             if (mysqli_num_rows($result) > 0) {
@@ -31,23 +35,20 @@
           <div class="col-md-4 mt-1">
             <img class="img-fluid" src="img/<?php echo $data['product_image'] ?>" alt="Card image cap" style="width: 300px;height: 300px;">
             <br>
-              <div class=" d-inline p-1 float-left"><?php echo $data['product_name']; ?></div>
+              <div class=" d-inline p-1 float-left"><?php echo $data['product_name']; ?></div><br>
               <div class=" d-inline p-1 float-right " style="margin-right: 70px;">$<?php echo $data['product_price']; ?></div>
             <br>
             <a class="btn btn-primary btn-success float-right" href="book_details.php?id=<?php echo $data['product_id']; ?>" role="button" style="margin-right: 70px;">Book Details</a>
           </div>
         <?php }}else{echo '<h2>No books found</h2>'; } ?>
           <div class="col-md-4 ">
-            <img class="img-fluid" src="http://via.placeholder.com/300C/O https://placeholder.com/" alt="Card image cap" style="width: 300px;height: 300px;">
-            <a class="btn btn-primary btn-success" href="book_details.html" role="button">Book Details</a>
+            
           </div>
           <div class="col-md-4 ">
-            <img class="img-fluid" src="http://via.placeholder.com/300C/O https://placeholder.com/" alt="Card image cap" style="width: 300px;height: 300px;">
-            <a class="btn btn-primary btn-success" href="book_details.html" role="button">Book Details</a>
+
           </div>
           <div class="col-md-4 mt-1">
-            <img class="img-fluid" src="http://via.placeholder.com/300C/O https://placeholder.com/" alt="Card image cap" style="width: 300px;height: 300px;">
-            <a class="btn btn-primary btn-success" href="book_details.html" role="button">Book Details</a>
+           
           </div>
         </div>
       </section>
