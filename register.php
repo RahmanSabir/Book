@@ -15,14 +15,14 @@ $password = $_POST['password'];
 
    if ( isset($_POST['username'])  &&  isset($_POST['password'])  ) {
       $query = " insert into user (name, password) values ('$name' , '$password') ";
-      mysqli_query($connect, $query);
+     $result = mysqli_query($connect, $query);
    }
-      else{
-      echo "registration successfull";
+   if($result){
+    echo "<div class='form'>
+<h3>You are registered successfully.</h3>
+<br/>Click here to <a href='login.php'>Login</a></div>";
 }
-}
-
-
+}else{
 ?>
 
 <!DOCTYPE html>
@@ -135,7 +135,7 @@ $password = $_POST['password'];
   </section>
 
 
-
+  <?php } ?>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
